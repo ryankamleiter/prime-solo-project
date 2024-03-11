@@ -4,9 +4,11 @@ import './LandingPage.css';
 
 // CUSTOM COMPONENTS
 import RegisterForm from '../RegisterForm/RegisterForm';
+import { useSelector } from 'react-redux';
 
 function LandingPage() {
   const [heading, setHeading] = useState('Welcome');
+
   const history = useHistory();
 
   const onLogin = (event) => {
