@@ -10,72 +10,97 @@ function Inventory() {
     const [manufacturer, setManufacturer] = useState('');
     const [series, setSeries] = useState('');
     const [year, setYear] = useState('')
-    
+    const [grade, setGrade] = useState('')
+    const [date_purchased, setDatePurchased] = useState('')
+    const [purchase_price, setPurchasePrice] = useState('')
+    const [status, setStatus] = useState('inventory')
+
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch({ type: 'FETCH_CARDS' });
     }, [])
 
-    console.log('card data: ', cards)
 
     // filter cards out cards that the user does not own
     const filteredCards = cards.filter(card => card.user_id === user.id && card.status === 'inventory')
 
     function openForm() {
         document.getElementById("myForm").style.display = "block";
-      }
-      
-      function closeForm() {
+    }
+
+    function closeForm() {
         document.getElementById("myForm").style.display = "none";
-      }
+    }
 
     return (
         <>
-        <table>
-            <thead>
-                <tr>
-                    <th>Player Name</th>
-                    <th>Manufacturer</th>
-                    <th>Series</th>
-                    <th>Year</th>
-                    <th>Grade</th>
-                    <th>Date Purchased</th>
-                    <th>Purchase Price</th>
-                </tr>
-            </thead>
-            <tbody>
-            {filteredCards.map((card, index) => (
-                    <tr key={index}>
-                        <td>{card.player_name}</td>
-                        <td>{card.manufacturer}</td>
-                        <td>{card.series}</td>
-                        <td>{card.year}</td>
-                        <td>{card.grade}</td>
-                        <td>{new Date(card.date_purchased).toLocaleDateString()}</td>
-                        <td>{'$' + card.purchase_price}</td>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Player Name</th>
+                        <th>Manufacturer</th>
+                        <th>Series</th>
+                        <th>Year</th>
+                        <th>Grade</th>
+                        <th>Date Purchased</th>
+                        <th>Purchase Price</th>
                     </tr>
-                ))}
-                <button className="open-button" onClick={(event) => openForm()}>Add New Card</button>
-            </tbody>
-        </table>
-        <div className="form-popup" id="myForm">
-        <form className="form-container" onSubmit={(event) => {
-            event.preventDefault();
-            dispatch({type: "ADD_CARD", payload:{player_name, manufacturer, series, year}})
-        }}>
-          <h1>Enter New Card</h1>
-      
-          <input type="text" placeholder="Player Name" value={player_name} onChange={(event) => setPlayerName(event.target.value)}/>
-          <input type="text" placeholder="Manufacturer" value={manufacturer} onChange={(event) => setManufacturer(event.target.value)}/>
-          <input type="text" placeholder="Series" value={series} onChange={(event) => setSeries(event.target.value)}/>
-          <input type="text" placeholder="Year" value={year} onChange={(event) => setYear(event.target.value)}/>
-      
-          <button type="submit" className="btn">Add</button>
-          <button type="button" className="btn cancel" onClick={() => closeForm()}>Cancel</button>
-        </form>
-      </div>
-      </>
+                </thead>
+                <tbody>
+                    {filteredCards.map((card, index) => (
+                        <tr key={index}>
+                            <td>{card.player_name}</td>
+                            <td>{card.manufacturer}</td>
+                            <td>{card.series}</td>
+                            <td>{card.year}</td>
+                            <td>{card.grade}</td>
+                            <td>{new Date(card.date_purchased).toLocaleDateString()}</td>
+                            <td>{'$' + card.purchase_price}</td>
+                        </tr>
+                    ))}
+                    <button className="open-button" onClick={(event) => openForm()}>Add New Card</button>
+                </tbody>
+            </table>
+            <div className="form-popup" id="myForm">
+                <form className="form-container" onSubmit={(event) => {
+                    event.preventDefault();
+                    dispatch({
+                        type: "ADD_CARD",
+                        payload: {
+                            player_name,
+                            manufacturer,
+                            series,
+                            year,
+                            grade,
+                            date_purchased,
+                            purchase_price,
+                            status,
+                        }
+                    });
+                    setPlayerName('');
+                    setManufacturer('');
+                    setSeries('');
+                    setYear('');
+                    setGrade('');
+                    setDatePurchased('');
+                    setPurchasePrice('');
+                }}>
+                    <h1>Enter New Card</h1>
+
+                    <input type="text" placeholder="Player Name" value={player_name} onChange={(event) => setPlayerName(event.target.value)} />
+                    <input type="text" placeholder="Manufacturer" value={manufacturer} onChange={(event) => setManufacturer(event.target.value)} />
+                    <input type="text" placeholder="Series" value={series} onChange={(event) => setSeries(event.target.value)} />
+                    <input type="text" placeholder="Year" value={year} onChange={(event) => setYear(event.target.value)} />
+                    <input type="text" placeholder="Grade" value={grade} onChange={(event) => setGrade(event.target.value)} />
+                    <input type="text" placeholder="Date Purchased" value={date_purchased} onChange={(event) => setDatePurchased(event.target.value)} />
+                    <input type="text" placeholder="Purchase Price" value={purchase_price} onChange={(event) => setPurchasePrice(event.target.value)} />
+
+                    <button type="submit" className="btn">Add</button>
+                    <button type="button" className="btn cancel" onClick={() => closeForm()}>Cancel</button>
+                </form>
+            </div>
+        </>
     )
 }
 
