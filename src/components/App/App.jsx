@@ -22,6 +22,8 @@ import RegisterPage from '../RegisterPage/RegisterPage';
 
 import './App.css';
 import Inventory from '../Inventory/Inventory';
+import Wishlist from '../Wishlist/Wishlist';
+import SoldCards from '../SoldCards/SoldCards';
 
 function App() {
   const dispatch = useDispatch();
@@ -113,6 +115,14 @@ function App() {
 
           <Route exact path="/inventory">
             <Inventory />
+          </Route>
+
+          <Route exact path="/wishlist">
+            <Wishlist />
+          </Route>
+
+          <Route exact path="/sold">
+            <SoldCards />
           </Route>
 
           {/* If none of the other routes matched, we will show a 404. */}

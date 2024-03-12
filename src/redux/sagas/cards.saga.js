@@ -19,8 +19,23 @@ function* fetchCards() {
     }
 }
 
+function* addCard(action){
+    try {
+        const config = {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        };
+        const response = yield axios.post("/api/inventory", action.payload, config);
+        console.log(action.payload)
+        yield put({ type: "FETCH_CARDS" });
+      } catch (error) {
+        console.log("User post request failed", error);
+      }
+}
+
 function* cardsSaga() {
     yield takeLatest('FETCH_CARDS', fetchCards);
+    yield takeLatest('ADD_CARD', addCard)
   }
   
   export default cardsSaga;
