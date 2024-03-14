@@ -6,7 +6,7 @@ const {
 } = require('../modules/authentication-middleware');
 
 router.get('/', rejectUnauthenticated, (req, res) => {
-    console.log('in router get')
+    // console.log('in router get')
     const queryText = `SELECT
     "card_user_reference"."user_id",
     "card_user_reference"."card_id",
@@ -29,7 +29,7 @@ JOIN
 `
     pool.query(queryText)
         .then(result => {
-            console.log(result.rows)
+            // console.log('result.rows', result.rows)
             res.send(result.rows);
         })
         .catch(err => {
@@ -60,5 +60,55 @@ router.post('/', rejectUnauthenticated, async (req, res) => {
         res.sendStatus(500);
     }
 });
+
+router.put("/:id", rejectUnauthenticated, async (req, res) => {
+    const { id } = req.params;
+    const {  player_name, manufacturer, series, year, status, grade, date_purchased, purchase_price, date_sold, sale_price } = req.body;
+    
+    try {
+        
+
+
+        // Update data in card table
+        const cardUpdateQuery = `UPDATE "card"
+        SET player_name = $1,
+            manufacturer = $2,
+            series = $3,
+            year = $4
+        WHERE id = $5;`;
+        await pool.query(cardUpdateQuery, [player_name, manufacturer, series, year, id]);
+
+        // Update data in card_user_reference table
+        const cardUserRefUpdateQuery = `UPDATE "card_user_reference"
+        SET status = $1,
+            date_purchased = $2,
+            purchase_price = $3,
+            grade = $4,
+            date_sold = $5,
+            sale_price = $6
+        WHERE card_id = $7
+    `;
+        await pool.query(cardUserRefUpdateQuery, [status, date_purchased, purchase_price, grade, date_sold, sale_price, id]);
+
+        res.sendStatus(200);
+    } catch (err) {
+        console.log('Error updating data:', err);
+        res.sendStatus(500);
+    }
+});
+
+router.delete("/:id", rejectUnauthenticated, (req, res) => {
+   
+        const queryText = `DELETE FROM "card_user_reference" WHERE card_id=$1;`
+        pool.query(queryText, [req.params.id])
+        .then((result) => {
+            console.log(req.params)
+            res.sendStatus(200);
+        })
+        .catch((err) => {
+            console.log('error deleting card', err);
+            res.sendStatus(500);
+        })
+})
 
 module.exports = router;
