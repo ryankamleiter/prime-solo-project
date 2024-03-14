@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 function Inventory() {
     const user = useSelector((store) => store.user);
     const cards = useSelector((store) => store.card);
+    console.log(cards)
 
     const [player_name, setPlayerName] = useState('');
     const [manufacturer, setManufacturer] = useState('');

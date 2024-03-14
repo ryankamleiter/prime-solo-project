@@ -46,13 +46,13 @@ router.post('/', rejectUnauthenticated, async (req, res) => {
         const cardQuery = `INSERT INTO "card" (player_name, manufacturer, series, year)
                            VALUES ($1, $2, $3, $4)
                            RETURNING id`;
-        const cardResult = await pool.query(cardQuery, [player_name, manufacturer, series, year]);
+        const cardResult = await pool.query(cardQuery, [player_name || null, manufacturer || null, series || null, year || null]);
         const cardId = cardResult.rows[0].id;
 
         // Insert data into card_user_reference table
         const cardUserRefQuery = `INSERT INTO "card_user_reference" (card_id, user_id, status, date_purchased, purchase_price, grade, date_sold, sale_price)
                                    VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`;
-        await pool.query(cardUserRefQuery, [cardId, req.user.id, status, date_purchased, purchase_price, grade, date_sold, sale_price]);
+        await pool.query(cardUserRefQuery, [cardId, req.user.id, status, date_purchased || null, purchase_price || 0, grade || null, date_sold || null, sale_price || 0]);
 
         res.sendStatus(201);
     } catch (error) {
@@ -76,7 +76,7 @@ router.put("/:id", rejectUnauthenticated, async (req, res) => {
             series = $3,
             year = $4
         WHERE id = $5;`;
-        await pool.query(cardUpdateQuery, [player_name, manufacturer, series, year, id]);
+        await pool.query(cardUpdateQuery, [player_name, manufacturer, series, year || 0, id]);
 
         // Update data in card_user_reference table
         const cardUserRefUpdateQuery = `UPDATE "card_user_reference"
@@ -88,7 +88,7 @@ router.put("/:id", rejectUnauthenticated, async (req, res) => {
             sale_price = $6
         WHERE card_id = $7
     `;
-        await pool.query(cardUserRefUpdateQuery, [status, date_purchased, purchase_price, grade, date_sold, sale_price, id]);
+        await pool.query(cardUserRefUpdateQuery, [status, date_purchased || null, purchase_price || null, grade || null, date_sold || null, sale_price || null, id]);
 
         res.sendStatus(200);
     } catch (err) {
