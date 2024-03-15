@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 
+
 function Inventory(props) {
     const user = useSelector((store) => store.user);
     const cards = useSelector((store) => store.card);
@@ -98,8 +99,7 @@ function Inventory(props) {
         dispatch({
           type: 'SET_EDIT_CARD',
           payload: {
-            id: card.card_id,
-            editCard
+            card
           }
         })
     
@@ -189,6 +189,7 @@ function Inventory(props) {
                     <input type="text" placeholder="Grade" value={editCard.grade} onChange={(event) => handleChange(event, 'grade')} />
                     <input type="text" placeholder="Date Purchased" value={editCard.date_purchased} onChange={(event) => handleChange(event, 'date_purchased')} />
                     <input type="text" placeholder="Purchase Price" value={editCard.purchase_price} onChange={(event) => handleChange(event, 'purchase_price')} />
+                
 
                     <button type="submit" className="btn">Add</button>
                     <button type="button" className="btn cancel" onClick={() => closeEditForm()}>Cancel</button>
