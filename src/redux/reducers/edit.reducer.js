@@ -1,6 +1,7 @@
 const editCard = (state  = {}, action) => {
     if(action.type === 'SET_EDIT_CARD') {
-        return action.payload;
+        console.log('set edit card action payload.card', action.payload.card)
+        return action.payload.card;
     } else if (action.type === 'EDIT_ONCHANGE') {
         return {
             ...state,

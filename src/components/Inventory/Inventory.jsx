@@ -84,10 +84,11 @@ function Inventory(props) {
       function handleSubmit(event) {
         event.preventDefault();
     
-        axios.put(`/api/inventory/${editCard.id}`, editCard)
+        axios.put(`/api/inventory/${editCard.card_id}`, editCard)
           .then(response => {         
             dispatch({ type: 'EDIT_CLEAR' });
             history.push('/inventory');
+            dispatch({ type: 'FETCH_CARDS'});
           })
           .catch(error => {
             console.log('error on PUT: ', error);
@@ -204,7 +205,7 @@ function Inventory(props) {
                     dispatch({
                         type: "EDIT_CARD",
                         payload: {
-                            card_id: id,
+                            card_id: cards.card_id,
                             player_name,
                             manufacturer,
                             series,
