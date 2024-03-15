@@ -113,9 +113,10 @@ function App() {
             }
           </Route>
 
-          <Route exact path="/inventory">
+          <Route path="/inventory">
             <Inventory />
           </Route>
+
 
           <Route exact path="/wishlist">
             <Wishlist />

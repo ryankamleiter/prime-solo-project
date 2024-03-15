@@ -1,11 +1,17 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
+import axios from 'axios';
 
-function Inventory() {
+function Inventory(props) {
     const user = useSelector((store) => store.user);
     const cards = useSelector((store) => store.card);
+    const editCard = useSelector((store) => store.editCard);
+
+    const history = useHistory();
     console.log(cards)
+    console.log(editCard)
 
     const [player_name, setPlayerName] = useState('');
     const [manufacturer, setManufacturer] = useState('');
@@ -28,7 +34,7 @@ function Inventory() {
     useEffect(() => {
         dispatch({ type: 'FETCH_CARDS' }),
         closeAddForm(),
-        closeEditForm(),
+        // closeEditForm(),
         closeMoveForm()
     }, [])
 
@@ -66,6 +72,40 @@ function Inventory() {
         dispatch({type: 'DELETE_CARD', payload: card.card_id})
     }
 
+    function handleChange(event, key) {
+        dispatch({
+          type: 'EDIT_ONCHANGE',
+          payload: {
+            property: key, value: event.target.value
+          }
+        });
+      }
+      function handleSubmit(event) {
+        event.preventDefault();
+    
+        axios.put(`/api/inventory/${editCard.id}`, editCard)
+          .then(response => {         
+            dispatch({ type: 'EDIT_CLEAR' });
+            history.push('/inventory');
+          })
+          .catch(error => {
+            console.log('error on PUT: ', error);
+          })
+    
+      };
+
+      const handleClick = (card) => {
+        dispatch({
+          type: 'SET_EDIT_CARD',
+          payload: {
+            id: card.card_id,
+            editCard
+          }
+        })
+    
+        history.push('/inventory/edit')
+      }
+
     return (
         <>
             <table>
@@ -90,7 +130,7 @@ function Inventory() {
                             <td>{card.grade}</td>
                             <td>{new Date(card.date_purchased).toLocaleDateString()}</td>
                             <td>{'$' + card.purchase_price}</td>
-                            <button className="open-button" onClick={() => openEditForm(card)}>Edit Card</button>
+                            <button className="open-button" onClick={() => handleClick(card)}>Edit Card</button>
                             <button className="open-button" onClick={() => openMoveForm(card)}>Move to Sold</button>
                             <button onClick={() => deleteCard(card)}>Delete Card</button>
                         </tr>
@@ -139,33 +179,16 @@ function Inventory() {
 
             {/* start of edit form */}
             <div className="form-popup" id="editForm">
-                <form className="form-container" onSubmit={(event) => {
-                    event.preventDefault();
-                    console.log(cards)
-                    dispatch({
-                        type: "EDIT_CARD",
-                        payload: {
-                            card_id: id,
-                            player_name,
-                            manufacturer,
-                            series,
-                            year,
-                            grade,
-                            date_purchased,
-                            purchase_price,
-                            status,
-                        }
-                    });
-                }}>
+                <form className="form-container" onSubmit={handleSubmit} >
                     <h1>Edit Card</h1>
 
-                    <input type="text" placeholder="Player Name" value={player_name} onChange={(event) => setPlayerName(event.target.value)} />
-                    <input type="text" placeholder="Manufacturer" value={manufacturer} onChange={(event) => setManufacturer(event.target.value)} />
-                    <input type="text" placeholder="Series" value={series} onChange={(event) => setSeries(event.target.value)} />
-                    <input type="text" placeholder="Year" value={year} onChange={(event) => setYear(event.target.value)} />
-                    <input type="text" placeholder="Grade" value={grade} onChange={(event) => setGrade(event.target.value)} />
-                    <input type="text" placeholder="Date Purchased" value={date_purchased} onChange={(event) => setDatePurchased(event.target.value)} />
-                    <input type="text" placeholder="Purchase Price" value={purchase_price} onChange={(event) => setPurchasePrice(event.target.value)} />
+                    <input type="text" placeholder="Player Name" value={editCard.player_name} onChange={(event) => handleChange(event, 'player_name')} />
+                    <input type="text" placeholder="Manufacturer" value={editCard.manufacturer} onChange={(event) => handleChange(event, 'manufacturer')} />
+                    <input type="text" placeholder="Series" value={editCard.series} onChange={(event) => handleChange(event, 'series')} />
+                    <input type="text" placeholder="Year" value={editCard.year} onChange={(event) => handleChange(event, 'year')} />
+                    <input type="text" placeholder="Grade" value={editCard.grade} onChange={(event) => handleChange(event, 'grade')} />
+                    <input type="text" placeholder="Date Purchased" value={editCard.date_purchased} onChange={(event) => handleChange(event, 'date_purchased')} />
+                    <input type="text" placeholder="Purchase Price" value={editCard.purchase_price} onChange={(event) => handleChange(event, 'purchase_price')} />
 
                     <button type="submit" className="btn">Add</button>
                     <button type="button" className="btn cancel" onClick={() => closeEditForm()}>Cancel</button>
