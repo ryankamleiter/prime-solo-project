@@ -64,7 +64,7 @@ router.post('/', rejectUnauthenticated, async (req, res) => {
 router.put("/:id", rejectUnauthenticated, async (req, res) => {
     const { id } = req.params;
     const {  player_name, manufacturer, series, year, status, grade, date_purchased, purchase_price, date_sold, sale_price } = req.body;
-    
+    console.log('in router put')
     try {
         
 

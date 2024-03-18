@@ -65,7 +65,7 @@ function* deleteCard(action) {
 function* cardsSaga() {
     yield takeLatest('FETCH_CARDS', fetchCards);
     yield takeLatest('ADD_CARD', addCard);
-    yield takeLatest('EDIT_CARD', editCard);
+    // yield takeLatest('EDIT_CARD', editCard);
     yield takeLatest('DELETE_CARD', deleteCard);
   }
   
