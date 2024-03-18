@@ -23,7 +23,8 @@ function Wishlist() {
     useEffect(() => {
         dispatch({ type: 'FETCH_CARDS' }),
         closeAddForm(),
-        closeEditForm()
+        closeEditForm(),
+        closeMoveForm()
     }, [])
     
         // filter cards out cards that the user does not have in their wishlist
@@ -79,6 +80,26 @@ function Wishlist() {
               })
               closeEditForm();
           };
+
+          function handleSubmitMoveToInventory(event) {
+            event.preventDefault();
+    
+            const updatedCard = {
+                ...editCard,
+                status: 'inventory'
+              };
+          
+            axios.put(`/api/inventory/${editCard.card_id}`, updatedCard)
+              .then(response => {         
+                dispatch({ type: 'EDIT_CLEAR' });
+                history.push('/wishlist');
+                dispatch({ type: 'FETCH_CARDS'});
+                closeMoveForm()
+              })
+              .catch(error => {
+                console.log('error on PUT: ', error);
+              });
+            }
     
           const handleClick = (card) => {
             dispatch({
@@ -90,6 +111,19 @@ function Wishlist() {
             document.getElementById("editForm").style.display = "block";
             history.push('/wishlist/edit')
           }
+
+          const handleMoveClick = (card) => {
+            dispatch({
+              type: 'SET_EDIT_CARD',
+              payload: {
+                card
+              }
+            })
+            document.getElementById("moveForm").style.display = "block";
+            history.push('/wishlist/edit')
+          }
+
+      
 
     return (
         <>
@@ -110,6 +144,7 @@ function Wishlist() {
                         <td>{card.series}</td>
                         <td>{card.year}</td>
                         <button className="open-button" onClick={() => handleClick(card)}>Edit Card</button>
+                        <button className="open-button" onClick={() => handleMoveClick(card)}>Move to Inventory</button>
                         <button onClick={() => deleteCard(card)}>Delete Card</button>
                     </tr>
                 ))}
@@ -133,6 +168,7 @@ function Wishlist() {
                         setManufacturer('');
                         setSeries('');
                         setYear('');
+                        document.getElementById("addForm").style.display = "none";
                     }}>
                         <h1>Enter New Card</h1>
     
@@ -158,6 +194,19 @@ function Wishlist() {
 
                     <button type="submit" className="btn">Add</button>
                     <button type="button" className="btn cancel" onClick={() => closeEditForm()}>Cancel</button>
+                </form>
+            </div>
+
+            <div className="form-popup" id="moveForm">
+            <form className="form-container" onSubmit={handleSubmitMoveToInventory} >
+                    <h1>Move to Inventory</h1>
+
+                    <input type="text" placeholder="Grade" value={editCard.grade} onChange={(event) => handleChange(event, 'grade')} />
+                    <input type="text" placeholder="Date Purchased" value={editCard.date_purchased} onChange={(event) => handleChange(event, 'date_purchased')} />
+                    <input type="text" placeholder="Purchase Price" value={editCard.purchase_price} onChange={(event) => handleChange(event, 'purchase_price')} />
+                   
+                    <button type="submit" className="btn">Add</button>
+                    <button type="button" className="btn cancel" onClick={() => closeMoveForm()}>Cancel</button>
                 </form>
             </div>
                 </>
