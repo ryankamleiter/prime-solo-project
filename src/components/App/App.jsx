@@ -118,11 +118,11 @@ function App() {
           </Route>
 
 
-          <Route exact path="/wishlist">
+          <Route path="/wishlist">
             <Wishlist />
           </Route>
 
-          <Route exact path="/sold">
+          <Route path="/sold">
             <SoldCards />
           </Route>
 

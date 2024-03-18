@@ -35,7 +35,7 @@ function Inventory(props) {
     useEffect(() => {
         dispatch({ type: 'FETCH_CARDS' }),
         closeAddForm(),
-        // closeEditForm(),
+        closeEditForm(),
         closeMoveForm()
     }, [])
 
@@ -51,10 +51,6 @@ function Inventory(props) {
         document.getElementById("addForm").style.display = "none";
     }
 
-    function openEditForm(card) {
-        setId(card.card_id);
-        document.getElementById("editForm").style.display = "block";
-    }
 
     function closeEditForm() {
         document.getElementById("editForm").style.display = "none";
@@ -93,7 +89,7 @@ function Inventory(props) {
           .catch(error => {
             console.log('error on PUT: ', error);
           })
-    
+          closeEditForm();
       };
 
       const handleClick = (card) => {
@@ -103,7 +99,7 @@ function Inventory(props) {
             card
           }
         })
-    
+        document.getElementById("editForm").style.display = "block";
         history.push('/inventory/edit')
       }
 
