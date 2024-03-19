@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
+import './Inventory.css'
 
 
 function Inventory(props) {
@@ -90,7 +91,27 @@ function Inventory(props) {
             console.log('error on PUT: ', error);
           })
           closeEditForm();
+          closeMoveForm();
       };
+
+      function handleSubmitMoveToSold(event) {
+        event.preventDefault();
+
+        const updatedCard = {
+            ...editCard,
+            status: 'sold'
+          };
+      
+        axios.put(`/api/inventory/${editCard.card_id}`, updatedCard)
+          .then(response => {         
+            dispatch({ type: 'EDIT_CLEAR' });
+            history.push('/inventory');
+            dispatch({ type: 'FETCH_CARDS'});
+          })
+          .catch(error => {
+            console.log('error on PUT: ', error);
+          });
+        }
 
       const handleClick = (card) => {
         dispatch({
@@ -103,8 +124,20 @@ function Inventory(props) {
         history.push('/inventory/edit')
       }
 
+      const handleMoveClick = (card) => {
+        dispatch({
+          type: 'SET_EDIT_CARD',
+          payload: {
+            card
+          }
+        })
+        document.getElementById("moveForm").style.display = "block";
+        history.push('/inventory/edit')
+      }
+
     return (
         <>
+        <h1>Your Inventory</h1>
             <table>
                 <thead>
                     <tr>
@@ -127,9 +160,11 @@ function Inventory(props) {
                             <td>{card.grade}</td>
                             <td>{new Date(card.date_purchased).toLocaleDateString()}</td>
                             <td>{'$' + card.purchase_price}</td>
-                            <button className="open-button" onClick={() => handleClick(card)}>Edit Card</button>
-                            <button className="open-button" onClick={() => openMoveForm(card)}>Move to Sold</button>
-                            <button onClick={() => deleteCard(card)}>Delete Card</button>
+                            <td>
+                                <button onClick={() => handleClick(card)}>Edit Card</button>
+                                <button onClick={() => handleMoveClick(card)}>Move to Sold</button>
+                                <button onClick={() => deleteCard(card)}>Delete Card</button>
+                            </td>
                         </tr>
                     ))}
                     <button className="open-button" onClick={(event) => openAddForm()}>Add New Card</button>
@@ -195,30 +230,11 @@ function Inventory(props) {
 
             {/* start of add to sold form */}
             <div className="form-popup" id="moveForm">
-                <form className="form-container" onSubmit={(event) => {
-                    event.preventDefault();
-                    setStatus('sold')
-                    dispatch({
-                        type: "EDIT_CARD",
-                        payload: {
-                            card_id: cards.card_id,
-                            player_name,
-                            manufacturer,
-                            series,
-                            year,
-                            grade,
-                            date_purchased,
-                            purchase_price,
-                            status,
-                            date_sold: moveDateSold,
-                            sale_price: moveSalePrice
-                        }
-                    });
-                }}>
+            <form className="form-container" onSubmit={handleSubmitMoveToSold} >
                     <h1>Move to Sold</h1>
 
-                    <input type="text" placeholder="Date Sold" value={moveDateSold} onChange={(event) => setMoveDateSold(event.target.value)} />
-                    <input type="text" placeholder="Sale Price" value={moveSalePrice} onChange={(event) => setMoveSalePrice(event.target.value)} />
+                    <input type="text" placeholder="Date Sold" value={editCard.date_sold} onChange={(event) => handleChange(event, 'date_sold')} />
+                    <input type="text" placeholder="Sale Price" value={editCard.sale_price} onChange={(event) => handleChange(event, 'sale_price')} />
                    
                     <button type="submit" className="btn">Add</button>
                     <button type="button" className="btn cancel" onClick={() => closeMoveForm()}>Cancel</button>
