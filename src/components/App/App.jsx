@@ -77,8 +77,8 @@ function App() {
           >
             {user.id ?
               // If the user is already logged in, 
-              // redirect to the /user page
-              <Redirect to="/user" />
+              // redirect to the /inventory page
+              <Redirect to="/inventory" />
               :
               // Otherwise, show the login page
               <LoginPage />

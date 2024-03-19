@@ -5,6 +5,10 @@ import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import './SoldCards.css'
 import Swal from 'sweetalert2'
+import Button from '@mui/material/Button';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import Stack from '@mui/material/Stack';
 
 function SoldCards() {
     const user = useSelector((store) => store.user);
@@ -134,8 +138,14 @@ function SoldCards() {
                             <td>{new Date(card.date_sold).toLocaleDateString()}</td>
                             <td>{card.sale_price}</td>
                             <td>
-                            <button onClick={() => handleClick(card)}>Edit Card</button>
-                            <button onClick={() => deleteCard(card)}>Delete Card</button>
+                            <Stack direction="row" spacing={2}>
+                                    <Button variant="outlined" onClick={() => handleClick(card)} startIcon={<EditIcon />}>
+                                        Edit
+                                    </Button>
+                                    <Button variant="contained" onClick={() => deleteCard(card)} endIcon={<DeleteIcon />}>
+                                        Delete
+                                    </Button>
+                                </Stack>
                             </td>
                         </tr>
                     ))}
