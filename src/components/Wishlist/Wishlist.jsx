@@ -127,6 +127,7 @@ function Wishlist() {
 
     return (
         <>
+        <h1>Wishlist</h1>
         <table>
             <thead>
                 <tr>
@@ -143,9 +144,11 @@ function Wishlist() {
                         <td>{card.manufacturer}</td>
                         <td>{card.series}</td>
                         <td>{card.year}</td>
-                        <button className="open-button" onClick={() => handleClick(card)}>Edit Card</button>
-                        <button className="open-button" onClick={() => handleMoveClick(card)}>Move to Inventory</button>
-                        <button onClick={() => deleteCard(card)}>Delete Card</button>
+                        <td>
+                            <button onClick={() => handleClick(card)}>Edit Card</button>
+                            <button onClick={() => handleMoveClick(card)}>Move to Inventory</button>
+                            <button onClick={() => deleteCard(card)}>Delete Card</button>
+                        </td>
                     </tr>
                 ))}
                 <button className="open-button" onClick={(event) => openAddForm()}>Add New Card</button>

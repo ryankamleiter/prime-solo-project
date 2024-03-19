@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
+import './Inventory.css'
 
 
 function Inventory(props) {
@@ -136,6 +137,7 @@ function Inventory(props) {
 
     return (
         <>
+        <h1>Your Inventory</h1>
             <table>
                 <thead>
                     <tr>
@@ -158,9 +160,11 @@ function Inventory(props) {
                             <td>{card.grade}</td>
                             <td>{new Date(card.date_purchased).toLocaleDateString()}</td>
                             <td>{'$' + card.purchase_price}</td>
-                            <button className="open-button" onClick={() => handleClick(card)}>Edit Card</button>
-                            <button className="open-button" onClick={() => handleMoveClick(card)}>Move to Sold</button>
-                            <button onClick={() => deleteCard(card)}>Delete Card</button>
+                            <td>
+                                <button onClick={() => handleClick(card)}>Edit Card</button>
+                                <button onClick={() => handleMoveClick(card)}>Move to Sold</button>
+                                <button onClick={() => deleteCard(card)}>Delete Card</button>
+                            </td>
                         </tr>
                     ))}
                     <button className="open-button" onClick={(event) => openAddForm()}>Add New Card</button>

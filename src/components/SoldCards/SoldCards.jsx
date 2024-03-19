@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
+import './SoldCards.css'
 
 function SoldCards() {
     const user = useSelector((store) => store.user);
@@ -97,6 +98,7 @@ function SoldCards() {
 
     return (
         <>
+        <h1>Sold Cards</h1>
             <table>
                 <thead>
                     <tr>
@@ -119,8 +121,10 @@ function SoldCards() {
                             <td>{card.grade}</td>
                             <td>{new Date(card.date_sold).toLocaleDateString()}</td>
                             <td>{card.sale_price}</td>
-                            <button className="open-button" onClick={() => handleClick(card)}>Edit Card</button>
+                            <td>
+                            <button onClick={() => handleClick(card)}>Edit Card</button>
                             <button onClick={() => deleteCard(card)}>Delete Card</button>
+                            </td>
                         </tr>
                     ))}
                 </tbody>
