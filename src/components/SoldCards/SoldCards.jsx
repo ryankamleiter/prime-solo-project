@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import './SoldCards.css'
+import Swal from 'sweetalert2'
 
 function SoldCards() {
     const user = useSelector((store) => store.user);
@@ -59,7 +60,18 @@ function SoldCards() {
     }
 
     const deleteCard = (card) => {
-        dispatch({type: 'DELETE_CARD', payload: card.card_id})
+        Swal.fire({
+            title:'Are you sure you want to delete this card?',
+            showDenyButton:true,
+            showCancelButton: true,
+            confirmButtonText: 'Yes',
+            denyButtonText: 'No',
+        }) 
+        .then((res) => {
+            if(res.isConfirmed) {
+                dispatch({type: 'DELETE_CARD', payload: card.card_id})
+            }
+        })
     }
 
     function handleChange(event, key) {
