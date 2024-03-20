@@ -22,18 +22,10 @@ function LandingPage() {
       <div className="grid">
         <div className="grid-col grid-col_8">
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur
-            id felis metus. Vestibulum et pulvinar tortor. Morbi pharetra lacus
-            ut ex molestie blandit. Etiam et turpis sit amet risus mollis
-            interdum. Suspendisse et justo vitae metus bibendum fringilla sed
-            sed justo. Aliquam sollicitudin dapibus lectus, vitae consequat odio
-            elementum eget. Praesent efficitur eros vitae nunc interdum, eu
-            interdum justo facilisis. Sed pulvinar nulla ac dignissim efficitur.
-            Quisque eget eros metus. Vestibulum bibendum fringilla nibh a
-            luctus. Duis a sapien metus.
+          Welcome to Cardfolio, an app where users can effortlessly manage their sports card collections. This app offers a seamless experience with features including collection management, wishlist functionality, and transaction history tracking. Easily organize and view your cards, set up a wishlist to track desired additions, and monitor the buying and selling activity of your collection. With a user-friendly interface and customizable options our app caters to collectors of all levels.
           </p>
 
-          <p>
+          {/* <p>
             Praesent consectetur orci dui, id elementum eros facilisis id. Sed
             id dolor in augue porttitor faucibus eget sit amet ante. Nunc
             consectetur placerat pharetra. Aenean gravida ex ut erat commodo, ut
@@ -51,7 +43,7 @@ function LandingPage() {
             sagittis neque id diam euismod, ut egestas felis ultricies. Nullam
             non fermentum mauris. Sed in enim ac turpis faucibus pretium in sit
             amet nisi.
-          </p>
+          </p> */}
         </div>
         <div className="grid-col grid-col_4">
           <RegisterForm />
