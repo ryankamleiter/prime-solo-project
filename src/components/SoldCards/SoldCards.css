@@ -1,6 +1,6 @@
 /* Button used to open the contact form - fixed at the bottom of the page */
 .open-button {
-    background-color: #67733C;
+    background-color: #0378A6;
     color: white;
     padding: 16px 20px;
     border: none;
@@ -45,7 +45,7 @@
   
   /* Set a style for the submit/login button */
   .form-container .btn {
-    background-color: #67733C;
+    background-color: #0378A6;
     color: white;
     padding: 16px 20px;
     border: none;
@@ -57,7 +57,9 @@
   
   /* Add a red background color to the cancel button */
   .form-container .cancel {
-    background-color: red;
+    background-color: white;
+    border: 2px solid #0378A6;
+    color: #0378A6
   }
   
   /* Add some hover effects to buttons */

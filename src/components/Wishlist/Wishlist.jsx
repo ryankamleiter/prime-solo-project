@@ -3,6 +3,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
+import Swal from 'sweetalert2'
+import Button from '@mui/material/Button';
+import DeleteIcon from '@mui/icons-material/Delete';
+import InventoryIcon from '@mui/icons-material/Inventory';
+import EditIcon from '@mui/icons-material/Edit';
+import SellIcon from '@mui/icons-material/Sell';
+import Stack from '@mui/material/Stack';
 
 function Wishlist() {
     const user = useSelector((store) => store.user);
@@ -55,9 +62,19 @@ function Wishlist() {
         }
     
         const deleteCard = (card) => {
-            dispatch({type: 'DELETE_CARD', payload: card.card_id})
+            Swal.fire({
+                title:'Are you sure you want to delete this card?',
+                showDenyButton:true,
+                showCancelButton: false,
+                confirmButtonText: 'Yes',
+                denyButtonText: 'No',
+            }) 
+            .then((res) => {
+                if(res.isConfirmed) {
+                    dispatch({type: 'DELETE_CARD', payload: card.card_id})
+                }
+            })
         }
-
         function handleChange(event, key) {
             dispatch({
               type: 'EDIT_ONCHANGE',
@@ -145,10 +162,18 @@ function Wishlist() {
                         <td>{card.series}</td>
                         <td>{card.year}</td>
                         <td>
-                            <button onClick={() => handleClick(card)}>Edit Card</button>
-                            <button onClick={() => handleMoveClick(card)}>Move to Inventory</button>
-                            <button onClick={() => deleteCard(card)}>Delete Card</button>
-                        </td>
+                                <Stack direction="row" spacing={2}>
+                                    <Button variant="outlined" onClick={() => handleClick(card)} startIcon={<EditIcon />}>
+                                        Edit
+                                    </Button>
+                                    <Button variant="contained" onClick={() => handleMoveClick(card)} endIcon={<InventoryIcon />}>
+                                        Mark Purchased
+                                    </Button>
+                                    <Button variant="contained" onClick={() => deleteCard(card)} endIcon={<DeleteIcon />}>
+                                        Delete
+                                    </Button>
+                                </Stack>
+                            </td>
                     </tr>
                 ))}
                 <button className="open-button" onClick={(event) => openAddForm()}>Add New Card</button>
