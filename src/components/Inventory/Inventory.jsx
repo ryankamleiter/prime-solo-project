@@ -80,7 +80,7 @@ function Inventory() {
         Swal.fire({
             title: 'Are you sure you want to delete this card?',
             showDenyButton: true,
-            showCancelButton: true,
+            showCancelButton: false,
             confirmButtonText: 'Yes',
             denyButtonText: 'No',
         })
@@ -141,6 +141,7 @@ function Inventory() {
                 card
             }
         })
+        closeAddForm()
         document.getElementById("editForm").style.display = "block";
         history.push('/inventory/edit')
     }
@@ -226,7 +227,7 @@ function Inventory() {
                     <h1>Enter New Card</h1>
 
                     <input type="text" placeholder="Player Name" value={player_name} onChange={(event) => setPlayerName(event.target.value)} />
-                    <input type="text" placeholder="Series" value={series} onChange={(event) => setSeries(event.target.value)} />
+                    {/* <input type="text" placeholder="Series" value={series} onChange={(event) => setSeries(event.target.value)} /> */}
                     <input type="text" placeholder="Manufacturer" value={manufacturer} onChange={(event) => setManufacturer(event.target.value)} />
                     <input type="text" placeholder="Series" value={series} onChange={(event) => setSeries(event.target.value)} />
                     <input type="text" placeholder="Year" value={year} onChange={(event) => setYear(event.target.value)} />

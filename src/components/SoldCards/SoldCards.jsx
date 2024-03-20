@@ -67,7 +67,7 @@ function SoldCards() {
         Swal.fire({
             title:'Are you sure you want to delete this card?',
             showDenyButton:true,
-            showCancelButton: true,
+            showCancelButton: false,
             confirmButtonText: 'Yes',
             denyButtonText: 'No',
         }) 
@@ -136,7 +136,7 @@ function SoldCards() {
                             <td>{card.year}</td>
                             <td>{card.grade}</td>
                             <td>{new Date(card.date_sold).toLocaleDateString()}</td>
-                            <td>{card.sale_price}</td>
+                            <td>{'$' + card.sale_price}</td>
                             <td>
                             <Stack direction="row" spacing={2}>
                                     <Button variant="outlined" onClick={() => handleClick(card)} startIcon={<EditIcon />}>
