@@ -3,12 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
-// import TextField from '@mui/material/TextField';
-// import Autocomplete from '@mui/material/Autocomplete';
 import Swal from 'sweetalert2'
 import Button from '@mui/material/Button';
 import DeleteIcon from '@mui/icons-material/Delete';
-import SendIcon from '@mui/icons-material/Send';
 import EditIcon from '@mui/icons-material/Edit';
 import SellIcon from '@mui/icons-material/Sell';
 import Stack from '@mui/material/Stack';
@@ -25,6 +22,7 @@ function Inventory() {
     console.log(cards)
     console.log(editCard)
 
+    // local state for add new card functionality
     const [player_name, setPlayerName] = useState('');
     const [manufacturer, setManufacturer] = useState('');
     const [series, setSeries] = useState('');
@@ -32,14 +30,8 @@ function Inventory() {
     const [grade, setGrade] = useState('')
     const [date_purchased, setDatePurchased] = useState('')
     const [purchase_price, setPurchasePrice] = useState('')
+    // default status to inventory when adding from inventory
     const [status, setStatus] = useState('inventory')
-    const [id, setId] = useState('')
-    // const [date_sold, setDateSold] = useState('')
-    // const [sale_price, setSalePrice] = useState('')
-    const [moveDateSold, setMoveDateSold] = useState('');
-    const [moveSalePrice, setMoveSalePrice] = useState('');
-
-
 
     const dispatch = useDispatch();
 
@@ -67,16 +59,13 @@ function Inventory() {
         document.getElementById("editForm").style.display = "none";
     }
 
-    function openMoveForm(card) {
-        setId(card.card_id);
-        document.getElementById("moveForm").style.display = "block";
-    }
 
     function closeMoveForm() {
         document.getElementById("moveForm").style.display = "none";
     }
 
     const deleteCard = (card) => {
+        // confirmation dialogue on delete
         Swal.fire({
             title: 'Are you sure you want to delete this card?',
             showDenyButton: true,
@@ -92,6 +81,7 @@ function Inventory() {
     }
 
     function handleChange(event, key) {
+        // capture input changes while editing
         dispatch({
             type: 'EDIT_ONCHANGE',
             payload: {
@@ -101,6 +91,7 @@ function Inventory() {
     }
     function handleSubmit(event) {
         event.preventDefault();
+        // send edited values to database, close forms, exit edit mode
 
         axios.put(`/api/inventory/${editCard.card_id}`, editCard)
             .then(response => {
@@ -117,6 +108,7 @@ function Inventory() {
 
     function handleSubmitMoveToSold(event) {
         event.preventDefault();
+        // send edited info to database, set status to sold to render on sold cards page
 
         const updatedCard = {
             ...editCard,
@@ -135,6 +127,7 @@ function Inventory() {
     }
 
     const handleClick = (card) => {
+        // set edit mode on the clicked on card
         dispatch({
             type: 'SET_EDIT_CARD',
             payload: {
@@ -203,6 +196,7 @@ function Inventory() {
             <div className="form-popup" id="addForm">
                 <form className="form-container" onSubmit={(event) => {
                     event.preventDefault();
+                    // send all info needed for inventory page
                     dispatch({
                         type: "ADD_CARD",
                         payload: {
@@ -227,7 +221,6 @@ function Inventory() {
                     <h1>Enter New Card</h1>
 
                     <input type="text" placeholder="Player Name" value={player_name} onChange={(event) => setPlayerName(event.target.value)} />
-                    {/* <input type="text" placeholder="Series" value={series} onChange={(event) => setSeries(event.target.value)} /> */}
                     <input type="text" placeholder="Manufacturer" value={manufacturer} onChange={(event) => setManufacturer(event.target.value)} />
                     <input type="text" placeholder="Series" value={series} onChange={(event) => setSeries(event.target.value)} />
                     <input type="text" placeholder="Year" value={year} onChange={(event) => setYear(event.target.value)} />

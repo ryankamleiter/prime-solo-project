@@ -15,6 +15,7 @@ function SoldCards() {
     const cards = useSelector((store) => store.card);
     const editCard = useSelector((store) => store.editCard);
 
+      // local state for add new card functionality
     const [player_name, setPlayerName] = useState('');
     const [manufacturer, setManufacturer] = useState('');
     const [series, setSeries] = useState('');
@@ -22,8 +23,8 @@ function SoldCards() {
     const [grade, setGrade] = useState('')
     const [date_sold, setDateSold] = useState('')
     const [sale_price, setSalePrice] = useState('')
+    // default status to sold when adding from sold page
     const [status, setStatus] = useState('sold')
-    const [id, setId] = useState('')
 
     const dispatch = useDispatch();
     const history = useHistory();
@@ -45,25 +46,19 @@ function SoldCards() {
         document.getElementById("addForm").style.display = "none";
     }
 
-    function openEditForm(card) {
-        setId(card.card_id);
-        document.getElementById("editForm").style.display = "block";
-    }
 
     function closeEditForm() {
         document.getElementById("editForm").style.display = "none";
     }
 
-    function openMoveForm(card) {
-        setId(card.card_id);
-        document.getElementById("moveForm").style.display = "block";
-    }
+    // move to inventory to be added
 
-    function closeMoveForm() {
-        document.getElementById("moveForm").style.display = "none";
-    }
+    // function closeMoveForm() {
+    //     document.getElementById("moveForm").style.display = "none";
+    // }
 
     const deleteCard = (card) => {
+        // confirmation dialogue on delete
         Swal.fire({
             title:'Are you sure you want to delete this card?',
             showDenyButton:true,
@@ -79,6 +74,7 @@ function SoldCards() {
     }
 
     function handleChange(event, key) {
+        // capture input changes while editing
         dispatch({
           type: 'EDIT_ONCHANGE',
           payload: {
@@ -88,6 +84,7 @@ function SoldCards() {
       }
       function handleSubmit(event) {
         event.preventDefault();
+         // send edited values to database, close forms, exit edit mode
     
         axios.put(`/api/inventory/${editCard.card_id}`, editCard)
           .then(response => {         
@@ -155,6 +152,7 @@ function SoldCards() {
             <div className="form-popup" id="addForm">
                 <form className="form-container" onSubmit={(event) => {
                     event.preventDefault();
+                    // send all info needed for inventory page
                     dispatch({
                         type: "ADD_CARD",
                         payload: {
@@ -190,6 +188,7 @@ function SoldCards() {
                     <button type="button" className="btn cancel" onClick={() => closeAddForm()}>Cancel</button>
                 </form>
             </div>
+            {/* Start of edit form */}
             <div className="form-popup" id="editForm">
             <form className="form-container" onSubmit={handleSubmit} >
                     <h1>Edit Card</h1>

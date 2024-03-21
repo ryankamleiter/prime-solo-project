@@ -6,7 +6,7 @@ const {
 } = require('../modules/authentication-middleware');
 
 router.get('/', rejectUnauthenticated, (req, res) => {
-    // console.log('in router get')
+    // Get all data for cards
     const queryText = `SELECT
     "card_user_reference"."user_id",
     "card_user_reference"."card_id",
@@ -29,7 +29,6 @@ JOIN
 `
     pool.query(queryText)
         .then(result => {
-            // console.log('result.rows', result.rows)
             res.send(result.rows);
         })
         .catch(err => {
@@ -56,7 +55,7 @@ router.post('/', rejectUnauthenticated, async (req, res) => {
 
         res.sendStatus(201);
     } catch (error) {
-        console.error('Error inserting data:', error);
+        console.log('Error inserting data:', error);
         res.sendStatus(500);
     }
 });
@@ -66,9 +65,6 @@ router.put("/:id", rejectUnauthenticated, async (req, res) => {
     const {  player_name, manufacturer, series, year, status, grade, date_purchased, purchase_price, date_sold, sale_price } = req.body;
     console.log('in router put')
     try {
-        
-
-
         // Update data in card table
         const cardUpdateQuery = `UPDATE "card"
         SET player_name = $1,
@@ -102,7 +98,6 @@ router.delete("/:id", rejectUnauthenticated, (req, res) => {
         const queryText = `DELETE FROM "card_user_reference" WHERE card_id=$1;`
         pool.query(queryText, [req.params.id])
         .then((result) => {
-            console.log(req.params)
             res.sendStatus(200);
         })
         .catch((err) => {

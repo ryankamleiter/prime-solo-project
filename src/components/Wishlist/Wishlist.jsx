@@ -8,7 +8,6 @@ import Button from '@mui/material/Button';
 import DeleteIcon from '@mui/icons-material/Delete';
 import InventoryIcon from '@mui/icons-material/Inventory';
 import EditIcon from '@mui/icons-material/Edit';
-import SellIcon from '@mui/icons-material/Sell';
 import Stack from '@mui/material/Stack';
 
 function Wishlist() {
@@ -16,12 +15,14 @@ function Wishlist() {
     const cards = useSelector((store) => store.card);
     const editCard = useSelector((store) => store.editCard);
 
+     // local state for add new card functionality
     const [player_name, setPlayerName] = useState('');
     const [manufacturer, setManufacturer] = useState('');
     const [series, setSeries] = useState('');
     const [year, setYear] = useState('');
+     // default status to wishlist when adding from wishlist
     const [status, setStatus] = useState('wishlist');
-    const [id, setId] = useState('')
+  
 
 
     const dispatch = useDispatch();
@@ -52,16 +53,13 @@ function Wishlist() {
             document.getElementById("editForm").style.display = "none";
         }
     
-        function openMoveForm(card) {
-            setId(card.card_id);
-            document.getElementById("moveForm").style.display = "block";
-        }
     
         function closeMoveForm() {
             document.getElementById("moveForm").style.display = "none";
         }
     
         const deleteCard = (card) => {
+             // confirmation dialogue on delete
             Swal.fire({
                 title:'Are you sure you want to delete this card?',
                 showDenyButton:true,
@@ -76,6 +74,7 @@ function Wishlist() {
             })
         }
         function handleChange(event, key) {
+            // capture input changes while editing
             dispatch({
               type: 'EDIT_ONCHANGE',
               payload: {
@@ -85,6 +84,7 @@ function Wishlist() {
           }
           function handleSubmit(event) {
             event.preventDefault();
+             // send edited values to database, close forms, exit edit mode
         
             axios.put(`/api/inventory/${editCard.card_id}`, editCard)
               .then(response => {         
@@ -100,6 +100,7 @@ function Wishlist() {
 
           function handleSubmitMoveToInventory(event) {
             event.preventDefault();
+            // send edited info to database, set status to inventory to render on inventory page
     
             const updatedCard = {
                 ...editCard,
@@ -119,6 +120,7 @@ function Wishlist() {
             }
     
           const handleClick = (card) => {
+            // set edit mode on the clicked on card
             dispatch({
               type: 'SET_EDIT_CARD',
               payload: {
@@ -182,6 +184,7 @@ function Wishlist() {
                     <div className="form-popup" id="addForm">
                     <form className="form-container" onSubmit={(event) => {
                         event.preventDefault();
+                        // send all info needed for wishlist page
                         dispatch({
                             type: "ADD_CARD",
                             payload: {
@@ -210,6 +213,7 @@ function Wishlist() {
                         <button type="button" className="btn cancel" onClick={() => closeAddForm()}>Cancel</button>
                     </form>
                 </div>
+                {/* start of edit form */}
                 <div className="form-popup" id="editForm">
                 <form className="form-container" onSubmit={handleSubmit} >
                     <h1>Edit Card</h1>
@@ -225,6 +229,7 @@ function Wishlist() {
                 </form>
             </div>
 
+            {/* start of move form */}
             <div className="form-popup" id="moveForm">
             <form className="form-container" onSubmit={handleSubmitMoveToInventory} >
                     <h1>Move to Inventory</h1>
