@@ -105,8 +105,8 @@ function App() {
           >
             {user.id ?
               // If the user is already logged in, 
-              // redirect them to the /user page
-              <Redirect to="/user" />
+              // redirect them to the /inventory page
+              <Redirect to="/inventory" />
               :
               // Otherwise, show the Landing page
               <LandingPage />
