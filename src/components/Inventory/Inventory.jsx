@@ -54,6 +54,9 @@ function Inventory() {
         document.getElementById("addForm").style.display = "none";
     }
 
+    function openEditForm() {
+        document.getElementById("editForm").style.display = "block";
+    }
 
     function closeEditForm() {
         document.getElementById("editForm").style.display = "none";
@@ -135,7 +138,8 @@ function Inventory() {
             }
         })
         closeAddForm()
-        document.getElementById("editForm").style.display = "block";
+        // document.getElementById("editForm").style.display = "block";
+        openEditForm();
         history.push('/inventory/edit')
     }
 
