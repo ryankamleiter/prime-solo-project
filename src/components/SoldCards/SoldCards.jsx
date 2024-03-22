@@ -150,60 +150,114 @@ function SoldCards() {
                     <button className="open-button" onClick={(event) => openAddForm()}>Add New Card</button>
             </table>
             <div className="form-popup" id="addForm">
-                <form className="form-container" onSubmit={(event) => {
-                    event.preventDefault();
-                    // send all info needed for inventory page
-                    dispatch({
-                        type: "ADD_CARD",
-                        payload: {
-                            player_name,
-                            manufacturer,
-                            series,
-                            year,
-                            grade,
-                            date_sold,
-                            sale_price,
-                            status,
-                        }
-                    });
-                    setPlayerName('');
-                    setManufacturer('');
-                    setSeries('');
-                    setYear('');
-                    setGrade('');
-                    setDateSold('');
-                    setSalePrice('');
-                }}>
-                    <h1>Enter New Card</h1>
+            <form className="form-container" onSubmit={(event) => {
+    event.preventDefault();
+    // send all info needed for inventory page
+    dispatch({
+        type: "ADD_CARD",
+        payload: {
+            player_name,
+            manufacturer,
+            series,
+            year,
+            grade,
+            date_sold,
+            sale_price,
+            status,
+        }
+    });
+    setPlayerName('');
+    setManufacturer('');
+    setSeries('');
+    setYear('');
+    setGrade('');
+    setDateSold('');
+    setSalePrice('');
+}}>
+    <h1>Enter New Card</h1>
 
-                    <input type="text" placeholder="Player Name" value={player_name} onChange={(event) => setPlayerName(event.target.value)} />
-                    <input type="text" placeholder="Manufacturer" value={manufacturer} onChange={(event) => setManufacturer(event.target.value)} />
-                    <input type="text" placeholder="Series" value={series} onChange={(event) => setSeries(event.target.value)} />
-                    <input type="text" placeholder="Year" value={year} onChange={(event) => setYear(event.target.value)} />
-                    <input type="text" placeholder="Grade" value={grade} onChange={(event) => setGrade(event.target.value)} />
-                    <input type="text" placeholder="Date Sold" value={date_sold} onChange={(event) => setDateSold(event.target.value)} />
-                    <input type="text" placeholder="Sale Price" value={sale_price} onChange={(event) => setSalePrice(event.target.value)} />
+    <div className="form-group">
+        <label htmlFor="playerName">Player Name:</label>
+        <input type="text" id="playerName" placeholder="Enter player name" value={player_name} onChange={(event) => setPlayerName(event.target.value)} />
+    </div>
 
-                    <button type="submit" className="btn">Add</button>
-                    <button type="button" className="btn cancel" onClick={() => closeAddForm()}>Cancel</button>
-                </form>
+    <div className="form-group">
+        <label htmlFor="manufacturer">Manufacturer:</label>
+        <input type="text" id="manufacturer" placeholder="Enter manufacturer" value={manufacturer} onChange={(event) => setManufacturer(event.target.value)} />
+    </div>
+
+    <div className="form-group">
+        <label htmlFor="series">Series:</label>
+        <input type="text" id="series" placeholder="Enter series" value={series} onChange={(event) => setSeries(event.target.value)} />
+    </div>
+
+    <div className="form-group">
+        <label htmlFor="year">Year:</label>
+        <input type="text" id="year" placeholder="Enter year" value={year} onChange={(event) => setYear(event.target.value)} />
+    </div>
+
+    <div className="form-group">
+        <label htmlFor="grade">Grade:</label>
+        <input type="text" id="grade" placeholder="Enter grade" value={grade} onChange={(event) => setGrade(event.target.value)} />
+    </div>
+
+    <div className="form-group">
+        <label htmlFor="dateSold">Date Sold:</label>
+        <input type="date" id="dateSold" placeholder="Enter date sold" value={date_sold} onChange={(event) => setDateSold(event.target.value)} />
+    </div>
+
+    <div className="form-group">
+        <label htmlFor="salePrice">Sale Price:</label>
+        <input type="text" id="salePrice" placeholder="Enter sale price" value={sale_price} onChange={(event) => setSalePrice(event.target.value)} />
+    </div>
+
+    <button type="submit" className="btn">Add</button>
+    <button type="button" className="btn cancel" onClick={() => closeAddForm()}>Cancel</button>
+</form>
             </div>
             {/* Start of edit form */}
             <div className="form-popup" id="editForm">
-            <form className="form-container" onSubmit={handleSubmit} >
-                    <h1>Edit Card</h1>
+            <form className="form-container" onSubmit={handleSubmit}>
+    <h1>Edit Card</h1>
 
-                    <input type="text" placeholder="Player Name" value={editCard.player_name} onChange={(event) => handleChange(event, 'player_name')} />
-                    <input type="text" placeholder="Manufacturer" value={editCard.manufacturer} onChange={(event) => handleChange(event, 'manufacturer')} />
-                    <input type="text" placeholder="Series" value={editCard.series} onChange={(event) => handleChange(event, 'series')} />
-                    <input type="text" placeholder="Year" value={editCard.year} onChange={(event) => handleChange(event, 'year')} />
-                    <input type="text" placeholder="Grade" value={editCard.grade} onChange={(event) => handleChange(event, 'grade')} />
-                    <input type="text" placeholder="Date Purchased" value={editCard.date_sold} onChange={(event) => handleChange(event, 'date_sold')} />
-                    <input type="text" placeholder="Purchase Price" value={editCard.sale_price} onChange={(event) => handleChange(event, 'sale_price')} />
-                   
-                    <button type="submit" className="btn">Add</button>
-                    <button type="button" className="btn cancel" onClick={() => closeEditForm()}>Cancel</button>
-                </form>
+    <div className="form-group">
+        <label htmlFor="playerName">Player Name:</label>
+        <input type="text" id="playerName" placeholder="Enter player name" value={editCard.player_name} onChange={(event) => handleChange(event, 'player_name')} />
+    </div>
+
+    <div className="form-group">
+        <label htmlFor="manufacturer">Manufacturer:</label>
+        <input type="text" id="manufacturer" placeholder="Enter manufacturer" value={editCard.manufacturer} onChange={(event) => handleChange(event, 'manufacturer')} />
+    </div>
+
+    <div className="form-group">
+        <label htmlFor="series">Series:</label>
+        <input type="text" id="series" placeholder="Enter series" value={editCard.series} onChange={(event) => handleChange(event, 'series')} />
+    </div>
+
+    <div className="form-group">
+        <label htmlFor="year">Year:</label>
+        <input type="text" id="year" placeholder="Enter year" value={editCard.year} onChange={(event) => handleChange(event, 'year')} />
+    </div>
+
+    <div className="form-group">
+        <label htmlFor="grade">Grade:</label>
+        <input type="text" id="grade" placeholder="Enter grade" value={editCard.grade} onChange={(event) => handleChange(event, 'grade')} />
+    </div>
+
+    <div className="form-group">
+        <label htmlFor="dateSold">Date Sold:</label>
+        <input type="date" id="dateSold" placeholder="Enter date sold" value={editCard.date_sold} onChange={(event) => handleChange(event, 'date_sold')} />
+    </div>
+
+    <div className="form-group">
+        <label htmlFor="salePrice">Sale Price:</label>
+        <input type="text" id="salePrice" placeholder="Enter sale price" value={editCard.sale_price} onChange={(event) => handleChange(event, 'sale_price')} />
+    </div>
+
+    <button type="submit" className="btn">Save</button>
+    <button type="button" className="btn cancel" onClick={() => closeEditForm()}>Cancel</button>
+</form>
             </div>
         </>
     )
