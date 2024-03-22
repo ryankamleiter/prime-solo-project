@@ -153,6 +153,8 @@ function Inventory() {
             }
         })
         document.getElementById("moveForm").style.display = "block";
+        document.getElementById("addForm").style.display = "none";
+
         history.push('/inventory/edit')
     }
 

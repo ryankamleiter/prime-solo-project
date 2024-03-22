@@ -128,6 +128,7 @@ function Wishlist() {
             }
         })
         document.getElementById("editForm").style.display = "block";
+        document.getElementById("addForm").style.display = "none";
         history.push('/wishlist/edit')
     }
 
@@ -139,6 +140,7 @@ function Wishlist() {
             }
         })
         document.getElementById("moveForm").style.display = "block";
+        document.getElementById("addForm").style.display = "none";
         history.push('/wishlist/edit')
     }
 
