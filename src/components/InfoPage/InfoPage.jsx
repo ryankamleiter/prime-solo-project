@@ -19,6 +19,18 @@ function InfoPage() {
         <li>Material UI</li>
         <li>Sweet Alerts</li>
       </ul>
+      <h2>
+        Future Updates
+      </h2>
+      <ul>
+        <li></li>
+      </ul>
+      <h2>
+        Thanks Yous
+      </h2>
+      <ul>
+      <li></li>
+      </ul>
     </div>
   );
 }
