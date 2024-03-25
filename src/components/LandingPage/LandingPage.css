@@ -78,3 +78,8 @@ Grid
   flex-basis: 100%;
   max-width: 100%;
 }
+
+img {
+  width: 400px;
+  margin-left: 400px;
+}
