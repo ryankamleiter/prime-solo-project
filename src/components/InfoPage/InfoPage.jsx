@@ -23,13 +23,16 @@ function InfoPage() {
         Future Updates
       </h2>
       <ul>
+        <li>Search other user's inventories</li>
+        <li>Post cards for trade</li>
         <li></li>
       </ul>
       <h2>
         Thanks Yous
       </h2>
       <ul>
-      <li></li>
+      <li>Prime instructors, cohort mates, and community</li>
+      <li>Family</li>
       </ul>
     </div>
   );
