@@ -24,26 +24,8 @@ function LandingPage() {
           <p>
           Welcome to Cardfolio, an app where users can effortlessly manage their sports card collections. This app offers a seamless experience with features including collection management, wishlist functionality, and transaction history tracking. Easily organize and view your cards, set up a wishlist to track desired additions, and monitor the buying and selling activity of your collection. With a user-friendly interface and customizable options our app caters to collectors of all levels.
           </p>
-
-          {/* <p>
-            Praesent consectetur orci dui, id elementum eros facilisis id. Sed
-            id dolor in augue porttitor faucibus eget sit amet ante. Nunc
-            consectetur placerat pharetra. Aenean gravida ex ut erat commodo, ut
-            finibus metus facilisis. Nullam eget lectus non urna rhoncus
-            accumsan quis id massa. Curabitur sit amet dolor nisl. Proin
-            euismod, augue at condimentum rhoncus, massa lorem semper lacus, sed
-            lobortis augue mi vel felis. Duis ultrices sapien at est convallis
-            congue.
-          </p>
-
-          <p>
-            Fusce porta diam ac tortor elementum, ut imperdiet metus volutpat.
-            Suspendisse posuere dapibus maximus. Aliquam vitae felis libero. In
-            vehicula sapien at semper ultrices. Vivamus sed feugiat libero. Sed
-            sagittis neque id diam euismod, ut egestas felis ultricies. Nullam
-            non fermentum mauris. Sed in enim ac turpis faucibus pretium in sit
-            amet nisi.
-          </p> */}
+<img src='https://i.redd.it/bought-another-box-from-shopgoodwill-v0-25f14opuvj3c1.jpg?width=3024&format=pjpg&auto=webp&s=4de895b90ecda67ee2782a570dae5589cf7a8845' ></img>
+         
         </div>
         <div className="grid-col grid-col_4">
           <RegisterForm />
