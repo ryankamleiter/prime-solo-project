@@ -25,7 +25,7 @@ function InfoPage() {
       <ul>
         <li>Search other user's inventories</li>
         <li>Post cards for trade</li>
-        <li></li>
+        <li>Ebay API integration</li>
       </ul>
       <h2>
         Thanks Yous
